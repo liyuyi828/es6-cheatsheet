@@ -874,27 +874,27 @@ class Person {
 // `Reflect.ownKeys()`:
 
 // ```javascript
-// > const person = new Person(50);
-// > person.incrementAge(); // 'Midlife crisis'
-// > Reflect.ownKeys(person); // []
+> const person = new Person(50);
+> person.incrementAge(); // 'Midlife crisis'
+> Reflect.ownKeys(person); // []
 // ```
 
 // A more practical example of using WeakMaps is to store data which is associated
 // to a DOM element without having to pollute the DOM itself:
 
 // ```javascript
-// let map = new WeakMap();
-// let el  = document.getElementById('someElement');
+let map = new WeakMap();
+let el  = document.getElementById('someElement');
 
 // // Store a weak reference to the element with a key
-// map.set(el, 'reference');
+map.set(el, 'reference');
 
 // // Access the value of the element
-// let value = map.get(el); // 'reference'
+let value = map.get(el); // 'reference'
 
 // // Remove the reference
-// el.parentNode.removeChild(el);
-// el = null;
+el.parentNode.removeChild(el);
+el = null;
 
 // // map is empty, since the element is destroyed 
 // ```
@@ -912,43 +912,43 @@ class Person {
 
 // <sup>[(back to table of contents)](#table-of-contents)</sup>
 
-// ## Promises
+// ## Promises ===============================================================================================================
 
 // Promises allow us to turn our horizontal code (callback hell):
 
 // ```javascript
-// func1(function (value1) {
-//     func2(value1, function (value2) {
-//         func3(value2, function (value3) {
-//             func4(value3, function (value4) {
-//                 func5(value4, function (value5) {
-//                     // Do something with value 5
-//                 });
-//             });
-//         });
-//     });
-// });
+func1(function (value1) {
+    func2(value1, function (value2) {
+        func3(value2, function (value3) {
+            func4(value3, function (value4) {
+                func5(value4, function (value5) {
+                    // Do something with value 5
+                });
+            });
+        });
+    });
+});
 // ```
 
 // Into vertical code:
 
 // ```javascript
-// func1(value1)
-//     .then(func2)
-//     .then(func3)
-//     .then(func4)
-//     .then(func5, value5 => {
-//         // Do something with value 5
-//     });
+func1(value1)
+    .then(func2)
+    .then(func3)
+    .then(func4)
+    .then(func5, value5 => {
+        // Do something with value 5
+    });
 // ```
 
 // Prior to ES6, we used [bluebird](https://github.com/petkaantonov/bluebird) or
 // [Q](https://github.com/kriskowal/q). Now we have Promises natively:
 
 // ```javascript
-// new Promise((resolve, reject) =>
-//     reject(new Error('Failed to fulfill Promise')))
-//         .catch(reason => console.log(reason));
+new Promise((resolve, reject) =>
+    reject(new Error('Failed to fulfill Promise')))
+        .catch(reason => console.log(reason));
 // ```
 
 // Where we have two handlers, **resolve** (a function called when the Promise is
@@ -962,50 +962,50 @@ class Person {
 // Here is a practical example of using Promises:
 
 // ```javascript
-// var request = require('request');
+var request = require('request');
 
-// return new Promise((resolve, reject) => {
-//   request.get(url, (error, response, body) => {
-//     if (body) {
-//         resolve(JSON.parse(body));
-//       } else {
-//         resolve({});
-//       }
-//   });
-// });
+return new Promise((resolve, reject) => {
+  request.get(url, (error, response, body) => {
+    if (body) {
+        resolve(JSON.parse(body));
+      } else {
+        resolve({});
+      }
+  });
+});
 // ```
 
 // We can also **parallelize** Promises to handle an array of asynchronous
 // operations by using `Promise.all()`:
 
 // ```javascript
-// let urls = [
-//   '/api/commits',
-//   '/api/issues/opened',
-//   '/api/issues/assigned',
-//   '/api/issues/completed',
-//   '/api/issues/comments',
-//   '/api/pullrequests'
-// ];
+let urls = [
+  '/api/commits',
+  '/api/issues/opened',
+  '/api/issues/assigned',
+  '/api/issues/completed',
+  '/api/issues/comments',
+  '/api/pullrequests'
+];
 
-// let promises = urls.map((url) => {
-//   return new Promise((resolve, reject) => {
-//     $.ajax({ url: url })
-//       .done((data) => {
-//         resolve(data);
-//       });
-//   });
-// });
+let promises = urls.map((url) => {
+  return new Promise((resolve, reject) => {
+    $.ajax({ url: url })
+      .done((data) => {
+        resolve(data);
+      });
+  });
+});
 
-// Promise.all(promises)
-//   .then((results) => {
-//     // Do something with results of all our promises
-//  });
+Promise.all(promises)
+  .then((results) => {
+    // Do something with results of all our promises
+ });
 // ```
 
 // <sup>[(back to table of contents)](#table-of-contents)</sup>
 
-// ## Generators
+// ## Generators ====================================================================================================
 
 // Similar to how [Promises](https://github.com/DrkSephy/es6-cheatsheet#promises) allow us to avoid 
 // [callback hell](http://callbackhell.com/), Generators allow us to flatten our code - giving our
@@ -1016,18 +1016,18 @@ class Person {
 // A simple example of using generators is shown below:
 
 // ```javascript
-// function* sillyGenerator() {
-//     yield 1;
-//     yield 2;
-//     yield 3;
-//     yield 4;
-// }
+function* sillyGenerator() {
+    yield 1;
+    yield 2;
+    yield 3;
+    yield 4;
+}
 
-// var generator = sillyGenerator();
-// > console.log(generator.next()); // { value: 1, done: false }
-// > console.log(generator.next()); // { value: 2, done: false }
-// > console.log(generator.next()); // { value: 3, done: false }
-// > console.log(generator.next()); // { value: 4, done: false }
+var generator = sillyGenerator();
+> console.log(generator.next()); // { value: 1, done: false }
+> console.log(generator.next()); // { value: 2, done: false }
+> console.log(generator.next()); // { value: 3, done: false }
+> console.log(generator.next()); // { value: 4, done: false }
 // ```
 
 // Where [next](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Generator/next)
@@ -1037,22 +1037,22 @@ class Person {
 // ```javascript
 // // Hiding asynchronousity with Generators
 
-// function request(url) {
-//     getJSON(url, function(response) {
-//         generator.next(response);
-//     });
-// }
+function request(url) {
+    getJSON(url, function(response) {
+        generator.next(response);
+    });
+}
 // ```
 
 // And here we write a generator function that will return our data:
 
 // ```javascript
-// function* getData() {
-//     var entry1 = yield request('http://some_api/item1');
-//     var data1  = JSON.parse(entry1);
-//     var entry2 = yield request('http://some_api/item2');
-//     var data2  = JSON.parse(entry2);
-// }
+function* getData() {
+    var entry1 = yield request('http://some_api/item1');
+    var data1  = JSON.parse(entry1);
+    var entry2 = yield request('http://some_api/item2');
+    var data2  = JSON.parse(entry2);
+}
 // ```
 
 // By the power of `yield`, we are guaranteed that `entry1` will have the data needed to be parsed and stored
@@ -1062,38 +1062,38 @@ class Person {
 // and easy path for error propagation. As such, as we can augment our generator with Promises:
 
 // ```javascript
-// function request(url) {
-//     return new Promise((resolve, reject) => {
-//         getJSON(url, resolve);
-//     });
-// }
+function request(url) {
+    return new Promise((resolve, reject) => {
+        getJSON(url, resolve);
+    });
+}
 // ```
 
 // And we write a function which will step through our generator using `next` which in turn will utilize our
 // `request` method above to yield a Promise:
 
 // ```javascript
-// function iterateGenerator(gen) {
-//     var generator = gen();
-//     (function iterate(val) {
-//         var ret = generator.next();
-//         if(!ret.done) {
-//             ret.value.then(iterate);
-//         } 
-//     })(); 
-// }
+function iterateGenerator(gen) {
+    var generator = gen();
+    (function iterate(val) {
+        var ret = generator.next();
+        if(!ret.done) {
+            ret.value.then(iterate);
+        } 
+    })(); 
+}
 // ```
 
 // By augmenting our Generator with Promises, we have a clear way of propagating errors through the use of our 
 // Promise `.catch` and `reject`. To use our newly augmented Generator, it is as simple as before:
 
 // ```javascript
-// iterateGenerator(function* getData() {
-//     var entry1 = yield request('http://some_api/item1');
-//     var data1  = JSON.parse(entry1);
-//     var entry2 = yield request('http://some_api/item2');
-//     var data2  = JSON.parse(entry2);
-// });
+iterateGenerator(function* getData() {
+    var entry1 = yield request('http://some_api/item1');
+    var data1  = JSON.parse(entry1);
+    var entry2 = yield request('http://some_api/item2');
+    var data2  = JSON.parse(entry2);
+});
 // ```
 
 // We were able to reuse our implementation to use our Generator as before, which shows their power. While Generators
@@ -1103,96 +1103,96 @@ class Person {
 
 // <sup>[(back to table of contents)](#table-of-contents)</sup>
 
-// ## Async Await
+// ## Async Await =====================================================================================================================================
 
 // While this is actually an upcoming ES2016 feature, `async await` allows us to perform the same thing we accomplished 
 // using Generators and Promises with less effort:
 
 // ```javascript
-// var request = require('request');
+var request = require('request');
  
-// function getJSON(url) {
-//   return new Promise(function(resolve, reject) {
-//     request(url, function(error, response, body) {
-//       resolve(body);
-//     });
-//   });
-// }
+function getJSON(url) {
+  return new Promise(function(resolve, reject) {
+    request(url, function(error, response, body) {
+      resolve(body);
+    });
+  });
+}
  
-// async function main() {
-//   var data = await getJSON();
-//   console.log(data); // NOT undefined!
-// }
+async function main() {
+  var data = await getJSON();
+  console.log(data); // NOT undefined!
+}
  
-// main();
+main();
 // ```
 
 // Under the hood, it performs similarly to Generators. I highly recommend using them over Generators + Promises. A great resource
 // for getting up and running with ES7 and Babel can be found [here](http://masnun.com/2015/11/11/using-es7-asyncawait-today-with-babel.html).
 
 // <sup>[(back to table of contents)](#table-of-contents)</sup>
-// ## Getter and setter functions
+// ## Getter and setter functions =================================================================================================================
 
 // ES6 has started supporting getter and setter functions. Using the following example:
 
 // ```javascript
-// class Employee {
+class Employee {
 
-//     constructor(name) {
-//         this._name = name;
-//     }
+    constructor(name) {
+        this._name = name;
+    }
 
-//     get name() {
-//       if(this._name) {
-//         return 'Mr. ' + this._name.toUpperCase();  
-//       } else {
-//         return undefined;
-//       }  
-//     }
+    get name() {
+      if(this._name) {
+        return 'Mr. ' + this._name.toUpperCase();  
+      } else {
+        return undefined;
+      }  
+    }
 
-//     set name(newName) {
-//       if (newName == this._name) { 
-//         console.log('I already have this name.');
-//       } else if (newName) {
-//         this._name = newName;
-//       } else {
-//         return false;
-//       }
-//     }
-// }
+    set name(newName) {
+      if (newName == this._name) { 
+        console.log('I already have this name.');
+      } else if (newName) {
+        this._name = newName;
+      } else {
+        return false;
+      }
+    }
+}
 
-// var emp = new Employee("James Bond");
+var emp = new Employee("James Bond");
 
 // // uses the get method in the background
-// if (emp.name) { 
-//   console.log(emp.name);  // Mr. JAMES BOND
-// }
+if (emp.name) { 
+  console.log(emp.name);  // Mr. JAMES BOND
+}
 
 // // uses the setter in the background
-// emp.name = "Bond 007"; 
-// console.log(emp.name);  // Mr. BOND 007  
+emp.name = "Bond 007"; 
+console.log(emp.name);  // Mr. BOND 007  
 // ```
 
 // Latest browsers are also supporting getter/setter functions in Objects and we can use them for computed properties, adding listeners and preprocessing before setting/getting:
 
 // ```javascript
-// var person = {
-//   firstName: 'James',
-//   lastName: 'Bond',
-//   get fullName() {
-//       console.log('Getting FullName');
-//       return this.firstName + ' ' + this.lastName;
-//   },
-//   set fullName (name) {
-//       console.log('Setting FullName');
-//       var words = name.toString().split(' ');
-//       this.firstName = words[0] || '';
-//       this.lastName = words[1] || '';
-//   }
-// }
+var person = {
+  firstName: 'James',
+  lastName: 'Bond',
+  get fullName() {
+      console.log('Getting FullName');
+      return this.firstName + ' ' + this.lastName;
+  },
+  set fullName (name) {
+      console.log('Setting FullName');
+      var words = name.toString().split(' ');
+      this.firstName = words[0] || '';
+      this.lastName = words[1] || '';
+  }
+}
 
-// person.fullName; // James Bond
-// person.fullName = 'Bond 007';
-// person.fullName; // Bond 007
+person.fullName; // James Bond
+person.fullName = 'Bond 007';
+person.fullName; // Bond 007
 // ```
 // <sup>[(back to table of contents)](#table-of-contents)</sup>
